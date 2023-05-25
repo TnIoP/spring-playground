@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h2o.board.comment.mapper.CommentMapper">
+    <select id="getCommentsByPostId" resultType="com.h2o.board.comment.dto.CommentDTO">
+        select * from comment where post_id=#{post_id} order by id, parent_comment_id, depth
+    </select>
+    <insert id="createComment" parameterType="com.h2o.board.comment.dto.CommentDTO" useGeneratedKeys="true" keyProperty="id">
+        insert into comment (ip, contents, parent_comment_id, depth, is_hide, post_id) values (#{ip}, #{contents}, #{parent_comment_id}, #{depth}, #{is_hide}, #{post_id})
+    </insert>
+    <update id="updateComment" parameterType="com.h2o.board.comment.dto.CommentDTO">
+        update comment set contents=#{contents}, is_hide=#{is_hide} where id=#{id}
+    </update>
+    <delete id="deleteComment" parameterType="int">
+        delete from comment where id=#{id}
+    </delete>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.h2o.board.post.mapper.PostMapper">
+    <select id="getPostById" parameterType="int" resultType="com.h2o.board.post.dto.PostDTO">
+        select * from post where id=#{id}
+    </select>
+    <select id="getPosts" resultType="com.h2o.board.post.dto.PostDTO">
+        select * from post order by id asc
+    </select>
+    <insert id="createPost" parameterType="com.h2o.board.post.dto.PostDTO" useGeneratedKeys="true" keyProperty="id">
+        insert into post (title, ip, contents) values (#{title}, #{ip}, #{contents})
+    </insert>
+    <update id="updatePost" parameterType="com.h2o.board.post.dto.PostDTO">
+        update post set title=#{title}, ip=#{ip}, contents=#{contents} where id=#{id}
+    </update>
+    <delete id="deletePost" parameterType="int">
+        delete from post where id=#{id}
+    </delete>
+</mapper>
