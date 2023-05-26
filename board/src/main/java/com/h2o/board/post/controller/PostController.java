@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping("api/v1/posts")
 @RestController
 public class PostController {
 
