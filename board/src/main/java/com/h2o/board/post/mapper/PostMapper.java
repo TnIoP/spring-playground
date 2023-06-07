@@ -4,15 +4,17 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.h2o.board.post.dto.PostDTO;
+import com.h2o.board.post.dto.PostDto;
 
 @Mapper
 public interface PostMapper {
 
-    public PostDTO getPostById(int id) throws Exception;
-    public List<PostDTO> getPosts() throws Exception;
+    public PostDto getPostById(int id) throws Exception;
+    public List<PostDto> getPosts(int limit, int offset) throws Exception;
 
-    public void createPost(PostDTO postDTO) throws Exception;
-    public void updatePost(PostDTO postDTO) throws Exception;
+    public int getPostsTotal() throws Exception;
+
+    public void createPost(PostDto postDTO) throws Exception;
+    public void updatePost(PostDto postDTO) throws Exception;
     public void deletePost(int id) throws Exception;
 }

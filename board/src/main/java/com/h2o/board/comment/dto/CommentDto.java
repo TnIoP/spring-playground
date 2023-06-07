@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 
 @Getter @Setter
-public class CommentDTO {
+public class CommentDto {
     private int id;
     private String ip;
     private String contents;

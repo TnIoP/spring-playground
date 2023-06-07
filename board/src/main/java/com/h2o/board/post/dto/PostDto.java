@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.sql.Timestamp;
 
 @Getter @Setter
-public class PostDTO {
+public class PostDto {
     private int id;
     private String title;
     private String ip;
