@@ -1,13 +1,15 @@
 package com.h2o.board.post.controller;
 
+import com.h2o.board.post.dto.PostDeleteRequestDto;
 import com.h2o.board.post.dto.PostDto;
 import com.h2o.board.post.dto.PostListResponseDto;
 import com.h2o.board.post.service.PostService;
+import com.h2o.board.response.dto.DataResponseDto;
+import com.h2o.board.response.dto.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("api/v1/posts")
@@ -18,14 +20,14 @@ public class PostController {
 
     @Cacheable(value = "PostDTO.id", key = "#id", cacheManager = "cacheManager", unless = "#id == ''", condition = "#id > 4")
     @GetMapping("/{id}")
-    public PostDto getPostById(@PathVariable int id) throws Exception {
+    public DataResponseDto<PostDto> getPostById(@PathVariable int id){
         System.out.println(id);
-        return postService.getPostById(id);
+        return DataResponseDto.of(postService.getPostById(id));
     }
 
     @GetMapping
-    public PostListResponseDto getPosts(@RequestParam int limit, @RequestParam int offset) throws Exception{
-        return postService.getPosts(limit, offset);
+    public DataResponseDto<PostListResponseDto> getPosts(@RequestParam int limit, @RequestParam int offset) throws Exception{
+        return DataResponseDto.of(postService.getPosts(limit, offset));
     }
 
     @PostMapping
@@ -39,8 +41,8 @@ public class PostController {
         postService.updatePost(postDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public void deletePost(@PathVariable int id) throws Exception{
-        postService.deletePost(id);
+    @PostMapping("/{id}")
+    public void deletePost(@PathVariable int id, @RequestBody PostDeleteRequestDto postDeleteRequestDto) throws Exception{
+        postService.deletePost(id, postDeleteRequestDto.getIp());
     }
 }

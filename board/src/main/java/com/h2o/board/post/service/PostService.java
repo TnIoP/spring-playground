@@ -3,6 +3,7 @@ package com.h2o.board.post.service;
 import java.util.List;
 
 import com.h2o.board.exception.NotFoundException;
+import com.h2o.board.exception.UnauthorizedException;
 import com.h2o.board.post.dto.PostDto;
 import com.h2o.board.post.dto.PostListResponseDto;
 import com.h2o.board.post.mapper.PostMapper;
@@ -15,11 +16,13 @@ public class PostService {
 
     private final PostMapper postMapper;
 
-    public PostDto getPostById(int id) throws Exception {
+    public PostDto getPostById(int id) {
         PostDto post = postMapper.getPostById(id);
         System.out.println("[id:" + id + "] Service 에서 연산을 수행합니다");
-        if (post == null)
-            throw new NotFoundException(String.format("can't find post id: ID[%d]", id));
+        if (post == null) {
+            System.out.println("in ");
+            throw new NotFoundException("can't find post id: "+id);
+        }
         return post;
     }
 
@@ -42,7 +45,12 @@ public class PostService {
         postMapper.updatePost(postDTO);
     }
 
-    public void deletePost(int id) throws Exception {
+    public void deletePost(int id, String ip) throws Exception {
+        PostDto post = this.getPostById(id);
+        System.out.println(post.getIp() != ip);
+        if (post.getIp() != ip)
+            throw new UnauthorizedException(String.format("not match the author's ip: IP[%d]", ip));
+
         postMapper.deletePost(id);
     }
 }
