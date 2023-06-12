@@ -1,5 +1,8 @@
 package com.h2o.board.response.dto;
 
+import lombok.Getter;
+
+@Getter
 public class DataResponseDto<T> extends ResponseDto {
     private final T data;
 
