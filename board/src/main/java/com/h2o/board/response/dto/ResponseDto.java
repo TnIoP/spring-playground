@@ -1,10 +1,12 @@
 package com.h2o.board.response.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 @Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ResponseDto {
     private int statusCode;
     private HttpStatus status;

@@ -36,7 +36,7 @@ public class RedisConfig {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
         RedisCacheConfiguration configuration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer())) // Value Serializer 변경
-                .prefixCacheNameWith("Test:") // Prefix "Test:"
+                .prefixCacheNameWith("Cache-") // Prefix
                 .entryTtl(Duration.ofMinutes(5)); // life cycle: 5min
         builder.cacheDefaults(configuration);
         return builder.build();

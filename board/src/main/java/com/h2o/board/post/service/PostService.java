@@ -41,16 +41,16 @@ public class PostService {
         postMapper.createPost(postDTO);
     }
 
-    public void updatePost(PostDto postDTO) throws Exception {
+    public PostDto updatePost(PostDto postDTO) throws Exception {
         postMapper.updatePost(postDTO);
+        PostDto updatedPost = this.getPostById(postDTO.getId());
+        return updatedPost;
     }
 
     public void deletePost(int id, String ip) throws Exception {
         PostDto post = this.getPostById(id);
-        System.out.println(post.getIp() != ip);
-        if (post.getIp() != ip)
-            throw new UnauthorizedException(String.format("not match the author's ip: IP[%d]", ip));
-
+        if (!post.getIp().equals(ip))
+            throw new UnauthorizedException(String.format("not match the author's ip: IP[%s]", ip));
         postMapper.deletePost(id);
     }
 }
