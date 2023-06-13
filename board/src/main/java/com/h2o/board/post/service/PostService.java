@@ -5,52 +5,92 @@ import java.util.List;
 import com.h2o.board.exception.NotFoundException;
 import com.h2o.board.exception.UnauthorizedException;
 import com.h2o.board.post.dto.PostDto;
-import com.h2o.board.post.dto.PostListResponseDto;
+import com.h2o.board.post.dto.PostsResponseDto;
 import com.h2o.board.post.mapper.PostMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class PostService {
 
     private final PostMapper postMapper;
 
     public PostDto getPostById(int id) {
-        PostDto post = postMapper.getPostById(id);
-        System.out.println("[id:" + id + "] Service 에서 연산을 수행합니다");
-        if (post == null) {
-            System.out.println("in ");
-            throw new NotFoundException("can't find post id: "+id);
+        log.info("PostService.getPostById (id : {})", id);
+        PostDto post;
+        try {
+            post = postMapper.getPostById(id);
+        } catch (Exception e) {
+            log.error("PostService.getPostById error : {}", e.getMessage());
+            return null;
         }
+
+        if (post == null) {
+            log.info("PostService.getPostById can't find post id. (id : {})", id);
+            throw new NotFoundException("can't find post id. (id :" + id + ")");
+        }
+
+        log.info("PostService.getPostById (post : {})", post);
         return post;
     }
 
-    public PostListResponseDto getPosts(int limit, int offset) throws Exception {
-        PostListResponseDto postListResponseDto = new PostListResponseDto();
+    public PostsResponseDto getPosts(int limit, int offset) {
+        log.info("PostService.getPosts (limit : {}, offset : {})", limit, offset);
+        try {
+            int total = postMapper.getPostsTotal();
+            List<PostDto> posts = postMapper.getPosts(limit, offset);
+            log.info("PostService.getPosts (total : {}, posts : {})", total, posts);
 
-        List<PostDto> posts = postMapper.getPosts(limit, offset);
-        int total = postMapper.getPostsTotal();
-
-        postListResponseDto.setPosts(posts);
-        postListResponseDto.setTotal(total);
-        return postListResponseDto;
+            PostsResponseDto postsResponseDto = new PostsResponseDto();
+            postsResponseDto.setTotal(total);
+            postsResponseDto.setPosts(posts);
+            log.info("PostService.getPosts (postsResponseDto : {}", postsResponseDto);
+            return postsResponseDto;
+        } catch (Exception e) {
+            log.error("PostService.getPosts error : {}", e.getMessage());
+            return null;
+        }
     }
 
-    public void createPost(PostDto postDTO) throws Exception {
-        postMapper.createPost(postDTO);
+    public void createPost(PostDto postDTO) {
+        log.info("PostService.createPost (postDTO : {})", postDTO);
+        try {
+            postMapper.createPost(postDTO);
+            log.info("PostService.createPost Created");
+        } catch (Exception e) {
+            log.error("PostService.createPost error : {}", e.getMessage());
+        }
     }
 
-    public PostDto updatePost(PostDto postDTO) throws Exception {
-        postMapper.updatePost(postDTO);
-        PostDto updatedPost = this.getPostById(postDTO.getId());
-        return updatedPost;
+    public PostDto updatePost(PostDto postDTO) {
+        log.info("PostService.updatePost (postDTO : {})", postDTO);
+        this.getPostById(postDTO.getId());
+        try {
+            postMapper.updatePost(postDTO);
+            PostDto updatedPost = this.getPostById(postDTO.getId());
+            log.info("PostService.updatePost (updatedPost : {})", updatedPost);
+            return updatedPost;
+        } catch (Exception e) {
+            log.error("PostService.updatePost error : {}", e.getMessage());
+            return null;
+        }
     }
 
-    public void deletePost(int id, String ip) throws Exception {
+    public void deletePost(int id, String ip) {
+        log.info("PostService.deletePost (id : {}, ip : {})", id, ip);
         PostDto post = this.getPostById(id);
-        if (!post.getIp().equals(ip))
-            throw new UnauthorizedException(String.format("not match the author's ip: IP[%s]", ip));
-        postMapper.deletePost(id);
+        if (!post.getIp().equals(ip)) {
+            log.info("PostService.deletePost not match the author's ip. (ip : {})", ip);
+            throw new UnauthorizedException("not match the author's ip. (ip : " + ip + ")");
+        }
+        try {
+            postMapper.deletePost(id);
+            log.info("PostService.deletePost Deleted");
+        } catch (Exception e) {
+            log.error("PostService.deletePost error : {}", e.getMessage());
+        }
     }
 }

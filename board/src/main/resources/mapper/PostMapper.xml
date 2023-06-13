@@ -4,7 +4,7 @@
     <select id="getPostById" parameterType="int" resultType="com.h2o.board.post.dto.PostDto">
         select * from post where id=#{id}
     </select>
-    <select id="getPosts" parameterType="com.h2o.board.post.dto.PostListRequestDto" resultType="com.h2o.board.post.dto.PostDto">
+    <select id="getPosts" parameterType="com.h2o.board.post.dto.PostsRequestDto" resultType="com.h2o.board.post.dto.PostDto">
         select * from post order by id desc limit #{limit} offset #{offset}
     </select>
     <select id="getPostsTotal" resultType="int">

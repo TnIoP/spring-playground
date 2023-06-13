@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class PostListResponseDto {
-    private List<PostDto> posts;
+public class PostsResponseDto {
     private int total;
+    private List<PostDto> posts;
 }
