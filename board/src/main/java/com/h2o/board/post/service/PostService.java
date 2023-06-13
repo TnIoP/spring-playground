@@ -2,8 +2,8 @@ package com.h2o.board.post.service;
 
 import java.util.List;
 
-import com.h2o.board.exception.NotFoundException;
-import com.h2o.board.exception.UnauthorizedException;
+import com.h2o.board.global.exception.NotFoundException;
+import com.h2o.board.global.exception.UnauthorizedException;
 import com.h2o.board.post.dto.PostDto;
 import com.h2o.board.post.dto.PostsResponseDto;
 import com.h2o.board.post.mapper.PostMapper;

@@ -1,4 +1,4 @@
-package com.h2o.board.exception;
+package com.h2o.board.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

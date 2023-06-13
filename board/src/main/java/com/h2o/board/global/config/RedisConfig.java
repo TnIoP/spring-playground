@@ -1,4 +1,4 @@
-package com.h2o.board.config;
+package com.h2o.board.global.config;
 
 
 import org.springframework.beans.factory.annotation.Value;

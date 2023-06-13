@@ -2,8 +2,8 @@ package com.h2o.board.comment.service;
 
 import com.h2o.board.comment.dto.CommentDto;
 import com.h2o.board.comment.mapper.CommentMapper;
-import com.h2o.board.exception.NotFoundException;
-import com.h2o.board.exception.UnauthorizedException;
+import com.h2o.board.global.exception.NotFoundException;
+import com.h2o.board.global.exception.UnauthorizedException;
 import com.h2o.board.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

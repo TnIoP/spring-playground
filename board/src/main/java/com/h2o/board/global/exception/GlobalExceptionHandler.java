@@ -1,6 +1,6 @@
-package com.h2o.board.exception;
+package com.h2o.board.global.exception;
 
-import com.h2o.board.response.dto.ResponseDto;
+import com.h2o.board.global.response.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

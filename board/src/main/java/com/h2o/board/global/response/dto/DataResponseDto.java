@@ -1,4 +1,4 @@
-package com.h2o.board.response.dto;
+package com.h2o.board.global.response.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
