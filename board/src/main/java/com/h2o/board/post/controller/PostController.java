@@ -22,21 +22,21 @@ public class PostController {
 
     private final PostService postService;
 
-    @Cacheable(value = "Post.id", key = "#id")
+    @Cacheable(value = "Post", key = "#id")
     @GetMapping("/{id}")
     public DataResponseDto<PostDto> getPostById(@PathVariable int id) {
         log.info("PostController.getPostById (id : {})", id);
         return DataResponseDto.of(postService.getPostById(id));
     }
 
-    @Cacheable(value = "Post.id")
+    @Cacheable(value = "Post")
     @GetMapping
     public DataResponseDto<PostsResponseDto> getPosts(@RequestParam int limit, @RequestParam int offset) {
         log.info("PostController.getPosts (limit : {}, offset : {})", limit, offset);
         return DataResponseDto.of(postService.getPosts(limit, offset));
     }
 
-    @CacheEvict(value = "Post.id", allEntries = true)
+    @CacheEvict(value = "Post", allEntries = true)
     @PostMapping
     public ResponseDto createPost(@RequestBody PostDto postDTO) {
         log.info("PostController.createPost (postDTO : {})", postDTO);
@@ -44,7 +44,7 @@ public class PostController {
         return new ResponseDto(201, HttpStatus.CREATED, "Created success");
     }
 
-    @CachePut(value = "Post.id", key = "#id")
+    @CachePut(value = "Post", key = "#id")
     @PutMapping("/{id}")
     public DataResponseDto<PostDto> updatePost(@PathVariable int id, @RequestBody PostDto postDTO) {
         log.info("PostController.updatePost (id : {}, postDTO : {})", id, postDTO);
@@ -52,7 +52,7 @@ public class PostController {
         return DataResponseDto.of(postService.updatePost(postDTO));
     }
 
-    @CacheEvict(value = "Post.id", allEntries = true)
+    @CacheEvict(value = "Post", allEntries = true)
     @PostMapping("/{id}")
     public ResponseDto deletePost(@PathVariable int id, @RequestBody PostDeleteRequestDto postDeleteRequestDto) {
         log.info("PostController.deletePost (id : {}, ip : {})", id, postDeleteRequestDto.getIp());

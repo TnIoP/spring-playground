@@ -1,9 +1,10 @@
-package com.h2o.board.post.dto;
+package com.h2o.board.comment.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Setter
-public class PostDeleteRequestDto {
+public class CommentDeleteRequestDto {
     private String ip;
 }

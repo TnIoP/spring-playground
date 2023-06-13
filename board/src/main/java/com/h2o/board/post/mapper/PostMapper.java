@@ -9,10 +9,10 @@ import com.h2o.board.post.dto.PostDto;
 @Mapper
 public interface PostMapper {
 
-    public PostDto getPostById(int id);
-    public List<PostDto> getPosts(int limit, int offset);
-    public int getPostsTotal() ;
-    public void createPost(PostDto postDTO);
-    public void updatePost(PostDto postDTO);
-    public void deletePost(int id);
+    PostDto getPostById(int id);
+    List<PostDto> getPosts(int limit, int offset);
+    int getPostsTotal() ;
+    void createPost(PostDto postDTO);
+    void updatePost(PostDto postDTO);
+    void deletePost(int id);
 }
