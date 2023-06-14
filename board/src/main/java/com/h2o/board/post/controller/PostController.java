@@ -44,7 +44,7 @@ public class PostController {
         return new ResponseDto(201, HttpStatus.CREATED, "Created success");
     }
 
-    @CachePut(value = "Post", key = "#id")
+    @CacheEvict(value = "Post", allEntries = true)
     @PutMapping("/{id}")
     public DataResponseDto<PostDto> updatePost(@PathVariable int id, @RequestBody PostDto postDTO) {
         log.info("PostController.updatePost (id : {}, postDTO : {})", id, postDTO);
