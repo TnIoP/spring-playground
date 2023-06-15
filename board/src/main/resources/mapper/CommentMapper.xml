@@ -4,14 +4,17 @@
     <select id="getCommentById" parameterType="int" resultType="com.h2o.board.comment.dto.CommentDto">
         select * from comment where id=#{id}
     </select>
+    <select id="getLatestCommentId" parameterType="int" resultType="com.h2o.board.comment.dto.CommentDto">
+        select * from comment order by created_at desc limit 1;
+    </select>
     <select id="getCommentsByPostId" resultType="com.h2o.board.comment.dto.CommentDto">
-        select * from comment where post_id=#{postId} order by id, parent_comment_id, depth
+        select * from comment where post_id=#{postId} order by parent_comment_id, id, depth
     </select>
     <insert id="createComment" parameterType="com.h2o.board.comment.dto.CommentDto" useGeneratedKeys="true" keyProperty="id">
         insert into comment (ip, contents, parent_comment_id, depth, is_hide, post_id) values (#{ip}, #{contents}, #{parentCommentId}, #{depth}, #{isHide}, #{postId})
     </insert>
     <update id="updateComment" parameterType="com.h2o.board.comment.dto.CommentDto">
-        update comment set contents=#{contents}, is_hide=#{isHide} where id=#{id}
+        update comment set contents=#{contents}, parent_comment_id=#{parentCommentId}, is_hide=#{isHide} where id=#{id}
     </update>
     <delete id="deleteComment" parameterType="int">
         delete from comment where id=#{id}

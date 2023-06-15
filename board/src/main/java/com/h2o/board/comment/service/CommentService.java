@@ -47,6 +47,12 @@ public class CommentService {
 
         commentMapper.createComment(commentDTO);
         log.info("CommentService.createComment Created");
+
+        if (commentDTO.getParentCommentId() == 0) {
+            CommentDto createdComment = commentMapper.getLatestCommentId();
+            createdComment.setParentCommentId(createdComment.getId());
+            this.updateComment(createdComment);
+        }
     }
 
     public CommentDto updateComment(CommentDto commentDTO) {
