@@ -15,6 +15,7 @@ public class CommentDto {
     private int seq;
     private int depth;
     private Boolean isHide;
+    private Boolean isDeleted;
 
     @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private Timestamp createdAt;
