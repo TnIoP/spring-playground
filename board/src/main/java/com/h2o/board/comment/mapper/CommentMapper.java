@@ -8,6 +8,7 @@ public interface CommentMapper {
     CommentDto getCommentById(int id);
     CommentDto getLatestCommentId();
     List<CommentDto> getCommentsByPostId(int postId);
+    List<CommentDto> getCommentsByParentCommentId(int parentCommentId);
     void createComment(CommentDto commentDTO);
     void updateComment(CommentDto commentDTO);
     void deleteComment(int id);

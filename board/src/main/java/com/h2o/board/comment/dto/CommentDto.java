@@ -12,6 +12,7 @@ public class CommentDto {
     private String ip;
     private String contents;
     private int parentCommentId;
+    private int seq;
     private int depth;
     private Boolean isHide;
 

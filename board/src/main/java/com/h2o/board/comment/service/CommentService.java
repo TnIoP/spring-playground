@@ -45,6 +45,15 @@ public class CommentService {
         log.info("CommentService.createComment (commentDTO : {})", commentDTO);
         this.postService.getPostById(commentDTO.getPostId());
 
+        List<CommentDto> updateSeqComments = commentMapper.getCommentsByParentCommentId(commentDTO.getParentCommentId());
+
+        for (int i=0; i<updateSeqComments.size(); i++) {
+            if (updateSeqComments.get(i).getSeq() >= commentDTO.getSeq()) {
+                updateSeqComments.get(i).setSeq(updateSeqComments.get(i).getSeq()+1);
+                this.updateComment(updateSeqComments.get(i));
+            }
+        }
+
         commentMapper.createComment(commentDTO);
         log.info("CommentService.createComment Created");
 
